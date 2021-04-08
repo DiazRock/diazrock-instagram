@@ -1,0 +1,1 @@
+''' Platzigram URLS module '''
