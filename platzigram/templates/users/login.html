@@ -16,7 +16,7 @@
     {% endif %}
         
 
-    <form action="POST" action='{% url "login" %}'>
+    <form method="POST" action='{% url "login" %}'>
         {% csrf_token %}
         <form-group>
             <input 
