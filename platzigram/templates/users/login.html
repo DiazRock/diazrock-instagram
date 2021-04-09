@@ -12,23 +12,32 @@
 
     
     {% if error %}
-        <p style= 'color: red;'> {{ error }}</p>
+        <p class= "alert alert-danger"> {{ error }}</p>
     {% endif %}
         
 
     <form action="POST" action='{% url "login" %}'>
         {% csrf_token %}
-        <input 
-            type="text"
-            placeholder="Username"
-            name="username"
-            />
-        <input type="password"
-                placeholder="Password"
-                name="password">
-        <button type="submit">
+        <form-group>
+            <input 
+                class='form-control' 
+                type="text" 
+                name="username" 
+                placeholder="Username" />
+
+            <input 
+                class='form-control' 
+                type="password" 
+                name="password" 
+                placeholder="Password" />
+
+        
+        </form-group>
+
+        <button class="btn btn-primary btn-block mt-5" type="submit">
             Sign in!
         </button>
+
     </form>
     
 
