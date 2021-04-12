@@ -42,4 +42,5 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         context['profile'] = self.request.user.profile
+        context['likes'] = 0
         return context
