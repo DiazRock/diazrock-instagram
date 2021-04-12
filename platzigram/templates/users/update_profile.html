@@ -14,7 +14,7 @@
 
             <form 
             method="POST" 
-            action= '{% url "update_profile" %}'
+            action= '{% url "users:update_profile" %}'
             enctype="multipart/form-data">
                 {% csrf_token %}
 
@@ -27,11 +27,9 @@
                 <div class='media'>
                     {% if profile.picture %}
                         <img src="{{ profile.picture.url }}" class="rounded-circle" height="50" />
-                    {% else%}
+                        {% else%}
                         <img src="{% static 'img/default-profile.png' %}" class="rounded-circle" height="50" />
                     {% endif %}
-
-                    <img src="{% static 'img/default-profile.png' %}" class="rounded-circle" height="50"/>
                     
                     <div class="media-body">
                         <h5 class="ml-4">@{{ user.username }} | {{user.get_full_name}}</h5>
@@ -80,16 +78,15 @@
                         {% else %}
                             {{ profile.biography }}
                         {% endif %}
-                        
-                        <div class="invalid-feedback">
-                        
-                            {% for error in form.biography.errors %}
-                                {{ error }}
-                            {% endfor %}
-                                
-                        </div>
-
-                    </textarea>
+                    </textarea>    
+                    <div class="invalid-feedback">
+                    
+                        {% for error in form.biography.errors %}
+                            {{ error }}
+                        {% endfor %}
+                            
+                    </div>
+                    
                 </div>
 
                 {# Phone number #}
