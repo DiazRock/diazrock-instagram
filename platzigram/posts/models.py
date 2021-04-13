@@ -27,7 +27,6 @@ class Post(models.Model):
                                    blank=True,
                                    through='PostLike')
     
-    
         
     def __str__(self):
         """ Return title and username """
