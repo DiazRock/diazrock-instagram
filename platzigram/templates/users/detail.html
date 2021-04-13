@@ -9,7 +9,10 @@
     <div class="container mb-5" style="margin-top: 8em;">
         <div class="row">
             <div class="col-sm-4 d-flex justify-content-center">
-                <img src="{{ user.profile.picture.url }}" alt="@{{ user.username}}" class="rounded-circle" width="150px" />
+                <img src="{{ user.profile.picture.url }}" 
+                     alt="@{{ user.username}}" 
+                     class="rounded-circle" 
+                     width="150px" />
             </div>
             <div class="col-sm-8">
                 <h2 style="font-weight: 100;">
@@ -35,10 +38,10 @@
                         <b>{{ user.profile.posts_count }}</b> posts
                     </div>
                     <div class="col-sm-4">
-                        <b>{{ user.profile.followers }}</b> followers
+                        <b>{{ user.profile.followers.all.count }}</b> followers
                     </div>
                     <div class="col-sm-4">
-                        <b>{{ user.profile.following }}</b> following
+                        <b>{{ user.following.all.count }}</b> following
                     </div>
                 </div>
                 <div class="row mt-4">
