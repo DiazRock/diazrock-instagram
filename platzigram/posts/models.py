@@ -27,6 +27,8 @@ class Post(models.Model):
                                    blank=True,
                                    through='PostLike')
     
+    
+        
     def __str__(self):
         """ Return title and username """
         return '{} by @{}'.format(self.title, self.user.username)
