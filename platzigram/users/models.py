@@ -35,6 +35,9 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    followers = models.ManyToManyField(User, related_name='following', blank=True)
+
+
     @property
     def posts_count(self):
         """ Return posts count for profile """
