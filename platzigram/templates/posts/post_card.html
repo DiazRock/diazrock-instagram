@@ -16,11 +16,26 @@
     alt="{{ post.title }}">
 
     <p class="mt-1 ml-2" >
-        <a href="" style="color: #000; font-size: 20px;">
-            <i class="far fa-heart"></i>
-        </a> {{ post.likes.all.count }} likes
+        <form action="{% url 'posts:button_like' post.id %}"
+              method="POST">
+            {% csrf_token %}
+
+            {% if post_is_liked %}
+
+                <button type="submit"  value="{{post.id}}" style="color: #000; font-size: 20px;">
+                    <i class="fab fa-heart"></i>
+                </button> 
+            {% else %}
+                <button type="submit"  value="{{post.id}}" style="color: #000; font-size: 20px;">
+                    <i class="far fa-heart"></i>
+                </button>
+            {% endif %}
+            {{ post.likes.all.count }} likes
+        </form>
+           
     </p>
     <p class="ml-2 mt-0 mb-2">
         <b>{{ post.title }}</b> - <small>{{ post.created }}</small>
     </p>
 </div>
+
