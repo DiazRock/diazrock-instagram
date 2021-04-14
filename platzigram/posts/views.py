@@ -10,7 +10,7 @@ from posts.forms import PostForm
 
 # Models
 from posts.models import Post
-
+from users.models import Profile
 
 class PostsFeedView(LoginRequiredMixin, ListView):
     """Return all published posts."""
@@ -21,6 +21,16 @@ class PostsFeedView(LoginRequiredMixin, ListView):
     paginate_by = 30
     context_object_name = 'posts'
 
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if not 'username' in self.kwargs:
+            return qs
+        following_users= [user for user in self.request.user.following.all()]
+        
+        posts= [ post for u in following_users for post in Profile.objects.get(user = u.user).post_set.all() ]
+
+        return posts
+        
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     """Return post detail."""
