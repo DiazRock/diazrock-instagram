@@ -2,6 +2,7 @@
 
 # Django
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -39,6 +40,25 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     queryset = Post.objects.all()
     context_object_name = 'posts'
 
+
+def execute_like(request, pk):
+    if request.method == "POST":
+        likes_connected = get_object_or_404(Post, id= pk)
+        context = {
+            'post_is_liked': likes_connected.likes.filter(id=request.user.id).exists()
+        }
+        if not context['post_is_liked']:
+            likes_connected.likes.add(request.user)
+        else:
+            likes_connected.likes.remove(request.user)
+
+        context['post_is_liked'] = not context['post_is_liked']
+        context['number_of_likes'] = likes_connected.likes.all().count()
+        
+        return redirect(request.META.get('HTTP_REFERER'), **context)    
+    
+    return redirect('posts:detail')
+    
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     """Create a new post."""
