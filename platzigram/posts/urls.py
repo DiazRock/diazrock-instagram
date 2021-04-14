@@ -24,5 +24,8 @@ urlpatterns = [
         route='posts/<int:pk>/',
         view=views.PostDetailView.as_view(),
         name='detail'
-    )
+    ),
+    path(route = 'posts/<int:pk>/like',
+         view= views.execute_like,
+         name= 'button_like')
 ]
