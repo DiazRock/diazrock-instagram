@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block container %}
-
     <div class="container mb-5" style="margin-top: 8em;">
         <div class="row">
             <div class="col-sm-4 d-flex justify-content-center">
@@ -17,20 +16,36 @@
             <div class="col-sm-8">
                 <h2 style="font-weight: 100;">
                     {{ user.username }}
-                    {% if user == user %}
+                    {% if user.username == request.user.username %}
                         <a
-                            href="{% url "users:update_profile" %}"
+                            href='{% url "users:update_profile" %}'
                             class="ml-5 btn btn-sm btn-outline-info"
                         >
                             Edit profile
                         </a>
                     {% else %}
-                        <a
-                            href=""
-                            class="ml-5 btn btn-sm btn-primary"
-                        >
-                            Follow
-                        </a>
+                        <form 
+                            action="{% url 'users:follow_unfollow_view' %}"
+                            method= "POST">
+                            {% csrf_token %}
+                                <input type="hidden"
+                                name= "profile_id"
+                                value= {{ user.id }}>
+                                <button 
+                                type="submit"
+                                class = "btn btn-sm btn-outline-info"
+                                id = "follow-btn"
+                                >
+                                {% if follow %}
+                                    Unfollow                                    
+                                {% else %}
+                                    Follow
+                                {% endif %}
+                                    
+                                    
+                                </button>
+                        </form>
+                        
                     {% endif %}
                 </h2>
                 <div class="row mt-2" style="font-size: 1.2em">
