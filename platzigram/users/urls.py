@@ -28,6 +28,11 @@ urlpatterns = [
         route='me/profile/', 
         view= views.UpdateProfileView.as_view(), 
         name='update_profile'),
+    path (
+        'switch_follow/',
+        views.follow_unfollow_profile,
+        name= 'follow_unfollow_view'
+    ),
     
     #Post
     path(
