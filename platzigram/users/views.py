@@ -22,6 +22,21 @@ from users.forms import ProfileForm, SignupForm
 # Create your views here.
 
 
+def follow_unfollow_profile(request):
+    if request.method == "POST":
+        logged_user = Profile.objects.get(user = request.user)
+        user_id = request.POST.get('profile_id')
+        obj = Profile.objects.get(id= user_id)
+        if obj in logged_user.user.following.all():
+            logged_user.user.following.remove(obj)
+        else:
+            logged_user.user.following.add(obj)
+        
+        return redirect(request.META.get('HTTP_REFERER'))    
+    
+    return redirect('users:detail')
+
+
 class UserDetailView(LoginRequiredMixin, DetailView):
     """ User detail view """
     
@@ -35,7 +50,9 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         """ Add user's posts to context """
         context = super().get_context_data(**kwargs)
         user= self.get_object()
+        logged_user = Profile.objects.get(user = self.request.user)
         context['posts'] = Post.objects.filter(user= user).order_by('-created')
+        context['follow'] = [user == p.user for p in logged_user.user.following.all()] != []
         return context
 
 
@@ -77,3 +94,6 @@ class LoginView(auth_views.LoginView):
 class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
     """Logout view."""
     template_name = 'users/logged_out.html'
+
+
+    
